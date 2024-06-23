@@ -1,7 +1,7 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 import { Tabs } from 'expo-router'
-import { Entypo ,FontAwesome,Ionicons} from '@expo/vector-icons';
+import { Entypo ,FontAwesome,Ionicons,Fontisto } from '@expo/vector-icons';
 import {Colors} from "../../constants/Colors.ts";
 
 const _layouts = () => {
@@ -14,6 +14,10 @@ const _layouts = () => {
           tabBarLabel:"Home",
           tabBarIcon:({color})=><Entypo name="home" size={24} color={color} />
         }} />
+        <Tabs.Screen name="product" options={{
+          tabBarLabel:"Product",
+          tabBarIcon:({color})=> <Fontisto name="product-hunt" size={24} color="{color}" />
+        }}/>
         <Tabs.Screen name="explore" options={{
           tabBarLabel:"Explore",
           tabBarIcon:({color})=><FontAwesome name="search" size={24} color={color} />

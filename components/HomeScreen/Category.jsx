@@ -3,10 +3,12 @@ import React, { useEffect,useState } from 'react';
 import { Colors } from '../../constants/Colors';
 import { getAllCategory } from '../../apis/GetApis';
 import CategoryItem from './CategoryItem';
+import { useRouter } from "expo-router";
 
 const Category = () => {
     const [getCategory,setCategory]=useState([]);
-
+    const router = useRouter();
+    
     useEffect(()=>{
         const fetchData = async () => {
             try {
@@ -26,16 +28,19 @@ const Category = () => {
     <View>
       <View style={styles.headerContainer}>
         <Text style={styles.categoryText}>Category</Text>
-        <Text style={styles.viewAllText}>View All</Text>
+        <Text style={styles.viewAllText} onPress={(()=>router.push('/categoryList/Category'))}>View All</Text>
       </View>
       <FlatList 
         data={getCategory}
-        horizontal={true}
         showsHorizontalScrollIndicator={true}
-        style={{margin:20}}
+        style={{margin:10}}
+        numColumns={4}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({item})=>(  
-            <CategoryItem category={item}/>
+          <CategoryItem category={item} onPressCategory={() => router.push({
+            pathname: `/productList/${item.id}`,
+            params: { name: item.name }
+          })} />
         )}
       />
     </View>

@@ -1,20 +1,21 @@
 import { View, Text, Image, StyleSheet ,TouchableOpacity} from 'react-native';
 import React from 'react';
 
-const CategoryItem = ({ category }) => {
+const CategoryItem = ({ category ,onPressCategory}) => {
 
-    const splitName = category.name.split(' ');
-    const name = splitName.length > 1 
-        ? `${splitName[0]}\n${splitName.slice(1).join(' ')}`
-        : category.name;
+  const splitName = category.name.split(' ');
+  const name = splitName.length > 1 
+      ? `${splitName[0]}\n${splitName.slice(1).join(' ')}`
+      : category.name;
   
   return (
-    <TouchableOpacity style={styles.container} onPress={()=>alert(category.name)}>
+    <TouchableOpacity style={styles.container} onPress={()=>onPressCategory(category)}>
       <Image source={{ uri: category.image }} style={styles.image} />
       <Text style={styles.text}>{name}</Text>
     </TouchableOpacity>
   );
 };
+
 
 const styles = StyleSheet.create({
   container: {

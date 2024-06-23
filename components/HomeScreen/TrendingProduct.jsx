@@ -1,34 +1,39 @@
 import { View, Text ,StyleSheet, FlatList} from 'react-native'
 import React, { useEffect, useState } from 'react'
 import {Colors} from "../../constants/Colors.ts";
-import {getPopularProducts} from "../../apis/GetApis.jsx";
+import {getTrendingProduct} from "../../apis/GetApis.jsx";
 import ProductsCard from './ProductsCard.jsx';
 import { useRouter } from 'expo-router';
 
-const PopularProduct = () => {
+const TrendingProduct = () => {
 
     const [getData,setData] = useState([]);
     const router = useRouter();
     
     useEffect(()=>{
         const fetchData = async () =>{
-            const popular = await getPopularProducts();
-            setData(popular);
+            const trending = await getTrendingProduct();
+            setData(trending);
         }
 
         fetchData();
     },[]);
+
+    const processedData = getData
+    .sort((a, b) => b.id - a.id) // Sort by id in descending order
+    .slice(0, 6);
     
   return (
     <View>
     <View style={styles.headerContainer}>
-      <Text style={styles.categoryText}>Popular Products</Text>
+      <Text style={styles.categoryText}>Trending Products</Text>
       <Text style={styles.viewAllText} onPress={()=>router.push('/product')}>View All</Text>
     </View>
     <FlatList 
-        data={getData}
-        horizontal={true}
+        data={processedData}
+        numColumns={2}
         renderItem={({item,index})=>(
+            
             <ProductsCard products={item} key={index}/>
         )}
     />
@@ -42,6 +47,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center', 
         paddingHorizontal: 20,
+        marginBottom: 10,
     },
     categoryText: {
         fontSize: 16,
@@ -53,4 +59,4 @@ const styles = StyleSheet.create({
     },
 })
 
-export default PopularProduct
+export default TrendingProduct

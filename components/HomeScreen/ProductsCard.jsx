@@ -1,7 +1,9 @@
 import React, { useRef, useState } from 'react';
-import { View, Text, Image, StyleSheet, Animated, TouchableOpacity } from 'react-native';
+import { View, Text, Image, StyleSheet, Animated, TouchableOpacity, Dimensions } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons'; // For star icons
-import {Colors} from "../../constants/Colors";
+import { Colors } from "../../constants/Colors";
+
+const screenWidth = Dimensions.get('window').width;
 
 const ProductsCard = ({ products }) => {
   const [wishlistStatus, setWishlistStatus] = useState(products?.wishlist_status || false);
@@ -61,53 +63,53 @@ const ProductsCard = ({ products }) => {
 
   return (
     <View style={styles.container}>
-        <Image source={{ uri: products?.first_image }} style={styles.image} />
-        <TouchableOpacity style={styles.wishlistButton} onPress={handleWishlistToggle}>
-            <FontAwesome
-            name={wishlistStatus ? 'heart' : 'heart-o'} // Use filled heart if wishlist status is true, otherwise outline heart
-            size={20}
-            color="#e91e63"
-            />
-        </TouchableOpacity>
-        {/* <Animated.View style={[styles.saveTag, animatedStyle]}>
-            <FontAwesome name="star" size={20} color="#e91e63" />
-            <Text style={styles.saveText}>Save ₹{products?.discount_amount}</Text>
-        </Animated.View> */}
-        <Text style={styles.tag}>{products?.product_type == "new" ? "New" : "Refurbished"}</Text>
-        <View style={styles.textContainer}>
-            <View style={styles.nameContainer}>
-                <Text style={styles.text} numberOfLines={2} ellipsizeMode="tail">
-                {products?.name}
-                </Text>
-            </View>
-            <View style={styles.ratingContainer}>
-                {renderStars(products?.rating)}
-            </View>
-            <View style={{ marginTop: 4 }}>
-                <Text style={styles.reviews}>{products?.total_review} reviews</Text>
-            </View>
-            <View style={styles.bottomContainer}>
-                <View style={styles.priceContainer}>
-                    <Text style={styles.price}>₹{products?.offer_price}</Text>
-                    <Text style={styles.originalPrice}>₹{products?.sale_price}</Text>
-                </View>
-                <View style={styles.detailsContainer}>
-                    <Text style={styles.stock}>{products?.stock > 0 ? 'In Stock' : 'Out of Stock'}</Text>
-                </View>
-            </View>
+      <Image source={{ uri: products?.first_image }} style={styles.image} />
+      <TouchableOpacity style={styles.wishlistButton} onPress={handleWishlistToggle}>
+        <FontAwesome
+          name={wishlistStatus ? 'heart' : 'heart-o'} // Use filled heart if wishlist status is true, otherwise outline heart
+          size={20}
+          color="#e91e63"
+        />
+      </TouchableOpacity>
+      {/* <Animated.View style={[styles.saveTag, animatedStyle]}>
+        <FontAwesome name="star" size={20} color="#e91e63" />
+        <Text style={styles.saveText}>Save ₹{products?.discount_amount}</Text>
+      </Animated.View> */}
+      <Text style={styles.tag}>{products?.product_type == "new" ? "New" : "Refurbished"}</Text>
+      <View style={styles.textContainer}>
+        <View style={styles.nameContainer}>
+          <Text style={styles.text} numberOfLines={2} ellipsizeMode="tail">
+            {products?.name}
+          </Text>
         </View>
+        <View style={styles.ratingContainer}>
+          {renderStars(products?.rating)}
+        </View>
+        <View style={{ marginTop: 4 }}>
+          <Text style={styles.reviews}>{products?.total_review || products?.total_reviews} reviews</Text>
+        </View>
+        <View style={styles.bottomContainer}>
+          <View style={styles.priceContainer}>
+            <Text style={styles.price}>₹{products?.offer_price}</Text>
+            <Text style={styles.originalPrice}>₹{products?.sale_price}</Text>
+          </View>
+          <View style={styles.detailsContainer}>
+            <Text style={styles.stock}>{products?.stock > 0 ? 'In Stock' : 'Out of Stock'}</Text>
+          </View>
+        </View>
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    marginLeft: 20,
+    margin: 5,
     padding: 10,
     backgroundColor: '#fff',
     borderRadius: 10,
-    marginTop: 10,
-    width: 180, // Set width to ensure consistent card size
+    width: (screenWidth / 2) - 10, // Adjusted width to fit two cards side by side with padding
+    height: 250, // Adjusted height
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -120,7 +122,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: '100%',
-    height: 130,
+    height: 120,
     borderRadius: 15,
   },
   wishlistButton: {
