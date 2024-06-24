@@ -40,7 +40,7 @@ const CategoryList = () => {
     params: { name: item.name }
   })}/>;
 
-  const renderProduct = ({ item }) => <ProductCard products={item} />;
+  const renderProduct = ({ item }) => <ProductCard products={item}  onPressProduct={()=>router.push(`/productDetails/${item.slug}`)}/>;
 
   const ListHeaderComponent = () => (
     <>
@@ -85,6 +85,7 @@ const CategoryList = () => {
           ListHeaderComponent={ListHeaderComponent}
           contentContainerStyle={{ paddingBottom: 20 }}
           showsVerticalScrollIndicator={false}
+          
       />
     ) : (
         <Image source={require('../../assets/images/no-product-found.jpeg')} style={{width:'100%',height:'50%',marginTop:100}}/>

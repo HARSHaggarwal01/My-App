@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { baseUrl, Slider ,getAllCategories ,popularProducts ,getProducts ,getbrand,trendingProduct} from '../components/Common/Common'; 
+import { baseUrl, Slider ,getAllCategories ,popularProducts ,getProducts ,getbrand,trendingProduct,productDetails} from '../components/Common/Common'; 
 
 const token = "null";
 export const getSlider = async () => {
@@ -171,5 +171,32 @@ export const brand = async () => {
   } catch (err) {
     console.error('Error during API request:', err);
     return null; 
+  }
+};
+
+export const productDetail = async (slug, variantAttributeId = []) => {
+  try {
+    console.log(variantAttributeId);
+    const options = {
+      method: 'GET',
+      url: `${baseUrl}${productDetails}?slug=${slug}&variantAttributeId[]=[${variantAttributeId}]`,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    };
+    
+    const response = await axios.request(options);
+    const responseData = response.data;
+    const { error, result } = responseData;
+
+    if (!error) {
+      return result;
+    } else {
+      throw new Error('Error fetching product details');
+    }
+  } catch (error) {
+    console.error('Error in productDetail API:', error);
+    throw error; // Throw the error to handle it in the calling function
   }
 };

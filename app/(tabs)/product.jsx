@@ -2,12 +2,13 @@ import { View, Text, FlatList,ActivityIndicator } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { getAllProducts } from '../../apis/GetApis';
 import ProductsCard from '../../components/HomeScreen/ProductsCard';
-import { useNavigation } from 'expo-router';
+import { useNavigation ,useRouter} from 'expo-router';
 
 const Product = () => {
   const [product, setProduct] = useState([]);
   const [isLoading, setLoading] = useState(true);
   const navigation = useNavigation();
+  const router = useRouter();
 
   useEffect(() => {
     setLoading(true);
@@ -39,7 +40,7 @@ const Product = () => {
         numColumns={2}
         keyExtractor={(item) => item.variant_productid.toString()}
         renderItem={({ item }) => (
-          <ProductsCard products={item} />
+          <ProductsCard products={item} onPressProduct={()=>router.push(`/productDetails/${item.slug}`)} />
         )}
       />
     </View>

@@ -29,7 +29,7 @@ const PopularProduct = () => {
         data={getData}
         horizontal={true}
         renderItem={({item,index})=>(
-            <ProductsCard products={item} key={index}/>
+            <ProductsCard products={item} key={index} onPressProduct={()=>router.push(`/productDetails/${item.slug}`)} />
         )}
     />
   </View>

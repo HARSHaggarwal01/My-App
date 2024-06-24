@@ -5,23 +5,23 @@ import { Colors } from "../../constants/Colors";
 
 const screenWidth = Dimensions.get('window').width;
 
-const ProductsCard = ({ products }) => {
+const ProductsCard = ({ products , onPressProduct }) => {
   const [wishlistStatus, setWishlistStatus] = useState(products?.wishlist_status || false);
 
-  const renderStars = (rating) => {
-    const stars = [];
-    for (let i = 1; i <= 5; i++) {
-      stars.push(
-        <FontAwesome
-          key={i}
-          name="star"
-          size={15}
-          color={i <= rating ? '#FFD700' : '#D3D3D3'} // Gold for filled stars, light gray for empty
-        />
-      );
-    }
-    return stars;
-  };
+    const renderStars = (rating) => {
+      const stars = [];
+      for (let i = 1; i <= 5; i++) {
+        stars.push(
+          <FontAwesome
+            key={i}
+            name="star"
+            size={15}
+            color={i <= rating ? '#FFD700' : '#D3D3D3'} // Gold for filled stars, light gray for empty
+          />
+        );
+      }
+      return stars;
+    };
 
   const animatedValue = useRef(new Animated.Value(0)).current;
 
@@ -62,7 +62,7 @@ const ProductsCard = ({ products }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={()=>onPressProduct(products)}>
       <Image source={{ uri: products?.first_image }} style={styles.image} />
       <TouchableOpacity style={styles.wishlistButton} onPress={handleWishlistToggle}>
         <FontAwesome
@@ -98,7 +98,7 @@ const ProductsCard = ({ products }) => {
           </View>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

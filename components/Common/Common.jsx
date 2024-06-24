@@ -6,3 +6,4 @@ export const popularProducts = "/latest-product";
 export const getProducts = "/product";
 export const getbrand = "/brand";
 export const trendingProduct = "/product-trending";
+export const productDetails = "/product-detail";
